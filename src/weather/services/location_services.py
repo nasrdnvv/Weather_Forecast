@@ -1,13 +1,15 @@
 from .weather_services import get_weather
 
 def search_location_weather(query: str):
-    query = query.strip()
-    if not query:
+    query = query.strip()  # убираем пробелы
+    if not query:  # если пусто, возвращаем пустой список
         return []
 
-    weather = get_weather(query)
-    weather_list = []
-    if weather:
-        weather["from_db"] = False
-        weather_list.append(weather)
-    return weather_list
+    # Передаём именно строку в get_weather
+    weather = get_weather(city_name=query)
+
+    if not weather:
+        return []
+
+    weather["from_db"] = False
+    return [weather]

@@ -5,6 +5,7 @@ botocore==1.41.6
 certifi==2025.11.12
 charset-normalizer==3.4.4
 Django==5.2.8
+djangorestframework
 idna==3.11
 jmespath==1.0.1
 python-dateutil==2.9.0.post0

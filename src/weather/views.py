@@ -8,6 +8,9 @@ from .models import Location
 import requests
 from django.conf import settings
 from django.contrib.auth import logout
+from rest_framework.viewsets import ModelViewSet
+from .models import Location, User
+from .serializers import LocationSerializer, UserSerializer
 
 
 class WeatherMixin:
@@ -85,3 +88,11 @@ class LocationDeleteView(DeleteView):
 
 class CreateImageView(TemplateView):
     template_name = "weather/create_image.html"
+
+class LocationViewSet(ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

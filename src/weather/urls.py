@@ -1,6 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from .views import IndexView, SignupView, LocationSearchView, LocationDeleteView, CreateImageView, LogoutGetView
 from django.contrib.auth.views import LoginView
+from rest_framework.routers import DefaultRouter
+from .views import LocationViewSet, UserViewSet
+
+
+router = DefaultRouter()
+router.register('locations', LocationViewSet)
+router.register('users', UserViewSet)
 
 urlpatterns = [
     path('login/', LoginView.as_view(template_name='weather/login.html'), name='login'),
@@ -10,4 +17,5 @@ urlpatterns = [
     path('search/', LocationSearchView.as_view(), name='location_search'),
     path('delete/<int:loc_id>/', LocationDeleteView.as_view(), name='location_delete'),
     path('create-image/', CreateImageView.as_view(), name='create_image'),
+    path('api/', include(router.urls)),
 ]

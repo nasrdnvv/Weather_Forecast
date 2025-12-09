@@ -10,9 +10,10 @@ Weather Forecast
 Технологии
 	•	Python 3.14
 	•	Django 5.2.8
-	•	Docker
+	•	Docker Compose
 	•	SQLite (по умолчанию)
 	•	requests, python-dotenv, boto3
+    •	Django Rest Framework
 
 Установка и запуск
 
@@ -42,11 +43,13 @@ python manage.py runserver
 
 Сайт доступен: http://127.0.0.1:8000￼
 
-С Docker
-	1.	Собираем образ:
+C Docker Compose
 
-docker build -t weather_forecast .
+# Собрать и запустить контейнеры
+docker-compose up --build
 
-	2.	Запускаем контейнер:
+# В фоне
+docker-compose up -d
 
-docker run -d -p 8000:800
+# Остановить и удалить контейнеры
+docker-compose down

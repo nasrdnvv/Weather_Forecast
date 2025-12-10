@@ -9,8 +9,8 @@ from .models import Location, User
 
 from rest_framework.viewsets import ModelViewSet
 from .serializers import LocationSerializer, UserSerializer
-from .services.weather_services import get_weather
-from .services.location_services import search_location_weather
+from .services.weather_services import WeatherService
+from .services.location_services import LocationService
 
 class IndexView(ListView):
     model = Location
@@ -21,7 +21,7 @@ class IndexView(ListView):
         context = super().get_context_data(**kwargs)
         weather_list = []
         for location in context.get("locations", []):
-            weather = get_weather(location.name)
+            weather = WeatherService.get_weather(location.name)
             if weather:
                 weather["from_db"] = True
                 weather_list.append(weather)
@@ -49,7 +49,8 @@ class LocationSearchView(TemplateView):
         query = request.GET.get("q", "")
         if not query:
             return redirect("home")
-        weather_list = search_location_weather(query)
+        location_service = LocationService()
+        weather_list = location_service.search_location_weather(query)
         return render(request, self.template_name, {"weather_list": weather_list})
 
 class LocationDeleteView(DeleteView):

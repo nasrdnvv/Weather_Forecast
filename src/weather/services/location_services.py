@@ -1,15 +1,15 @@
-from .weather_services import get_weather
+from .weather_services import WeatherService
 
-def search_location_weather(query: str):
-    query = query.strip()  # убираем пробелы
-    if not query:  # если пусто, возвращаем пустой список
-        return []
+class LocationService:
+    def __init__(self):
+        self.weather_service = WeatherService()
 
-    # Передаём именно строку в get_weather
-    weather = get_weather(city_name=query)
-
-    if not weather:
-        return []
-
-    weather["from_db"] = False
-    return [weather]
+    def search_location_weather(self, query: str):
+        query = query.strip()
+        if not query:
+            return []
+        weather = self.weather_service.get_weather(city_name=query)
+        if not weather:
+            return []
+        weather["from_db"] = False
+        return [weather]
